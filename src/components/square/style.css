@@ -1,0 +1,25 @@
+.square {
+    border: 1px #999999 solid;
+    box-sizing: border-box;
+    ;
+    width: 5%;
+    height: 5%;
+    position: relative;
+}
+
+.snake {
+    background-color: #000000;
+}
+
+.fruit:before {
+    content: '';
+    display: block;
+    border: 0px;
+    border-radius: 50%;
+    left: 5%;
+    right: 5%;
+    top: 5%;
+    bottom: 5%;
+    position: absolute;
+    background-color: #999999;
+}

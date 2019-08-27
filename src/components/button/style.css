@@ -1,0 +1,13 @@
+.buttons-block button {
+    width: 100px;
+    height: 30px;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 10px 0 0;
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.buttons-block button:hover {
+    background-color: #ffffff;
+}

@@ -1,0 +1,19 @@
+.game {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.controls {
+    padding: 0 0 0 20px;
+}
+
+.buttons-block {}
+
+.direction-block {
+    padding: 20px 0 0 0;
+}
+
+.direction-wrap-line {
+    display: flex;
+    justify-content: center;
+}

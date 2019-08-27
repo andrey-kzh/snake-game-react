@@ -1,0 +1,15 @@
+.direction {
+    width: 60px;
+    height: 60px;
+    border: 1px #000000 solid;
+    margin: 0 6px 6px 0;
+    font-size: 28px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 52px;
+}
+
+.direction:hover {
+    border-color: #999999;
+    color: #999999;
+}

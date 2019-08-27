@@ -39,7 +39,7 @@ module.exports = {
     },
     plugins: [ //создает html страницу при сборке и импортирует в нее бандл (и css?)
         new HtmlWebpackPlugin({
-        	template: './src/index.html',
+            template: './src/index.html',
             filename: 'index.html'
         }),
         new MiniCssExtractPlugin({ //собирает импортированные css в единый файл

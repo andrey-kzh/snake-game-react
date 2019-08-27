@@ -1,4 +1,15 @@
-import css from './css/styles.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import css from './styles.css';
+import Game from './components/game/game.js';
 
-let a = "hellow world";
-console.log(a);
+
+class App extends React.Component {
+    render() {
+        return (
+                <Game />
+        );
+    }
+}
+
+ReactDOM.render(<App />, document.getElementById("app"));
