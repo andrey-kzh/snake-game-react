@@ -1,0 +1,3 @@
+.DS*
+package-lock.json
+/node_modules/
