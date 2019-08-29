@@ -12,8 +12,11 @@ export default class Board extends React.Component {
 
     renderSquares() {
         
+        let squareClass;
         let squares = Array(400).fill(null).map((square, i) => {
-            return <Square key={i} cssClass='' />
+
+            (this.props.snake.indexOf(i) != -1) ? squareClass = 'snake' : squareClass = ''; //рисуем змею
+            return <Square key={i} cssClass={squareClass} />
         })
 
         return squares;
