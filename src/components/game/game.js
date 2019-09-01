@@ -2,20 +2,43 @@ import React from 'react';
 import css from './style.css';
 
 import Board from '../board/board.js';
-import { Button } from '../button/button.js';
-import { Direction } from '../direction/direction.js';
+import Button from '../button/button.js';
+import Direction from '../direction/direction.js';
 
 export default class Game extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.changeDirections = this.changeDirections.bind(this);
+        this.state = this.initialState();
 
-        this.state = {
+        this.changeDirections = this.changeDirections.bind(this);
+        this.gameControls = this.gameControls.bind(this);
+    }
+
+
+    initialState() {
+
+        return {
             snake: [1, 2, 3],
             direction: 'right',
             board: Array(400).fill(null),
+        }
+    }
+
+
+    gameControls(command) {
+
+        switch (command) {
+            case 'start':
+                this.animateSnake();
+                break;
+            case 'pause':
+                clearInterval(this.movieSnake);
+                break;
+            case 'reset':
+                this.setState(this.initialState());
+                break;
         }
     }
 
@@ -39,6 +62,7 @@ export default class Game extends React.Component {
                     break;
                 default:
                     newDirectionOrKey = false;
+                    break;
             }
         }
 
@@ -50,7 +74,7 @@ export default class Game extends React.Component {
 
     animateSnake() {
 
-        const movieSnake = setInterval(() => {
+        this.movieSnake = setInterval(() => {
 
             const oldSnake = this.state.snake;
             let nextStep;
@@ -82,7 +106,7 @@ export default class Game extends React.Component {
 
     componentDidMount() {
 
-        this.animateSnake(); //запускаем змею
+        //this.animateSnake();
         document.addEventListener('keydown', (event) => this.changeDirections(event))
     }
 
@@ -101,8 +125,20 @@ export default class Game extends React.Component {
             <div className = "controls" >
 
             <div className="buttons-block">
-                    <Button buttonName="Старт" />
-                    <Button buttonName="Стоп" />
+                    <Button 
+                        buttonName="Start"
+                        command="start" 
+                        gameControls={this.gameControls} />
+
+                    <Button 
+                        buttonName="Pause" 
+                        command="pause" 
+                        gameControls={this.gameControls} />
+
+                    <Button 
+                        buttonName="Reset" 
+                        command="reset" 
+                        gameControls={this.gameControls} />
             </div>
 
             <div className = "direction-block" >

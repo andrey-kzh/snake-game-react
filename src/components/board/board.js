@@ -1,6 +1,7 @@
 import React from 'react';
 import css from './style.css';
-import { Square } from '../square/square.js';
+
+import Square from '../square/square.js';
 
 
 export default class Board extends React.Component {

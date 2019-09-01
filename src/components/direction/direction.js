@@ -1,7 +1,7 @@
 import React from 'react';
 import css from './style.css';
 
-export function Direction(props) {
+export default function Direction(props) {
 
 	let cssClass;
 
