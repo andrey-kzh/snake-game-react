@@ -10,15 +10,47 @@ export default class Game extends React.Component {
     constructor(props) {
         super(props);
 
+        this.changeDirections = this.changeDirections.bind(this);
+
         this.state = {
             snake: [1, 2, 3],
             direction: 'right',
+            board: Array(400).fill(null),
         }
     }
 
+
+    changeDirections(newDirectionOrKey) {
+
+        if (newDirectionOrKey.code != undefined) {
+
+            switch (newDirectionOrKey.code) {
+                case 'ArrowLeft':
+                    newDirectionOrKey = 'left';
+                    break;
+                case 'ArrowUp':
+                    newDirectionOrKey = 'up';
+                    break;
+                case 'ArrowRight':
+                    newDirectionOrKey = 'right';
+                    break;
+                case 'ArrowDown':
+                    newDirectionOrKey = 'down';
+                    break;
+                default:
+                    newDirectionOrKey = false;
+            }
+        }
+
+        if (newDirectionOrKey !== false) {
+            this.setState({ direction: newDirectionOrKey })
+        }
+    }
+
+
     animateSnake() {
 
-        setInterval(() => {
+        const movieSnake = setInterval(() => {
 
             const oldSnake = this.state.snake;
             let nextStep;
@@ -43,14 +75,15 @@ export default class Game extends React.Component {
 
             this.setState({ snake: newSnake })
 
-        }, 1000)
+        }, 300)
+
     }
 
 
     componentDidMount() {
 
         this.animateSnake(); //запускаем змею
-
+        document.addEventListener('keydown', (event) => this.changeDirections(event))
     }
 
 
@@ -59,27 +92,54 @@ export default class Game extends React.Component {
         return (
 
             <div className = "game">
-            
-            <Board snake={this.state.snake} />
 
-            <div className="controls">
+            <Board 
+                snake={this.state.snake} 
+                board={this.state.board}
+            />
 
-                <div className="buttons-block">
+            <div className = "controls" >
+
+            <div className="buttons-block">
                     <Button buttonName="Старт" />
                     <Button buttonName="Стоп" />
-                </div>
+            </div>
 
-                <div className="direction-block">
-                    <div className="direction-wrap-line">
-                        <Direction direction="up" />
-                    </div>
-                    <div className="direction-wrap-line">
-                        <Direction direction="left" />
-                        <Direction direction="down" />
-                        <Direction direction="right" />
-                    </div>
-                </div>
-                
+            <div className = "direction-block" >
+
+            <div className="direction-wrap-line">
+                        
+                <Direction 
+                    direction="up"
+                    directionState={this.state.direction}
+                    changeDirection={this.changeDirections}
+                />
+                    
+            </div> 
+
+            <div className = "direction-wrap-line" >
+
+                <Direction 
+                    direction="left"
+                    directionState={this.state.direction}
+                    changeDirection={this.changeDirections} 
+                />
+
+                <Direction 
+                    direction = "down"
+                    directionState={this.state.direction}
+                    changeDirection = { this.changeDirections }
+                />
+
+                <Direction 
+                    direction = "right"
+                    directionState={this.state.direction}
+                    changeDirection = { this.changeDirections }
+                /> 
+            
+            </div> 
+            </div>
+
             </div>
 
             </div>

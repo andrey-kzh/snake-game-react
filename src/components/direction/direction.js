@@ -3,32 +3,41 @@ import css from './style.css';
 
 export function Direction(props) {
 
-	let directionArrow;
+	let cssClass;
 
-	switch (props.direction) {
-		case 'up':
-			directionArrow = '8593';
-			break;
-		case 'down':
-			directionArrow = '8595';
-			break;
-		case 'left':
-			directionArrow = '8592';
-			break;
-		case 'right':
-			directionArrow = '8594';
-			break;
-		default:
-			directionArrow = '';
-			break;
-	}
+	(props.direction == props.directionState) ? cssClass = 'direction-active' : cssClass = 'direction';
 
-	const arrow = String.fromCharCode(directionArrow);
 
-	return (
+    let directionArrow;
 
-		<div className="direction">{arrow}</div>
+    switch (props.direction) {
+        case 'up':
+            directionArrow = '8593';
+            break;
+        case 'down':
+            directionArrow = '8595';
+            break;
+        case 'left':
+            directionArrow = '8592';
+            break;
+        case 'right':
+            directionArrow = '8594';
+            break;
+        default:
+            directionArrow = '';
+            break;
+    }
 
-		)
+    const arrow = String.fromCharCode(directionArrow);
+
+    return (
+
+        <div 
+			onClick={() => props.changeDirection(props.direction)} 
+			className={cssClass}>
+			{arrow}
+		</div>
+
+    )
 
 }

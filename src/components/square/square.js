@@ -1,12 +1,19 @@
 import React from 'react';
 import css from './style.css';
 
-export function Square(props) {
+export class Square extends React.PureComponent {
 
-	return (
+    constructor(props) {
+        super(props)
+    }
 
-		<div className={`square ${props.cssClass}`}></div>
+    render() {
 
-		)
+		console.log('square render');
+
+        return (
+            <div className={`square ${this.props.cssClass}`}></div>
+        )
+    }
 
 }
