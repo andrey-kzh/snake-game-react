@@ -1,43 +1,51 @@
 import React from 'react';
 import css from './style.css';
 
-export default function Direction(props) {
+export default class Direction extends React.PureComponent {
 
-	let cssClass;
-
-	(props.direction == props.directionState) ? cssClass = 'direction-active' : cssClass = 'direction';
-
-
-    let directionArrow;
-
-    switch (props.direction) {
-        case 'up':
-            directionArrow = '8593';
-            break;
-        case 'down':
-            directionArrow = '8595';
-            break;
-        case 'left':
-            directionArrow = '8592';
-            break;
-        case 'right':
-            directionArrow = '8594';
-            break;
-        default:
-            directionArrow = '';
-            break;
+    constructor(props) {
+        super(props)
     }
 
-    const arrow = String.fromCharCode(directionArrow);
 
-    return (
+    render() {
 
-        <div 
-			onClick={() => props.changeDirection(props.direction)} 
-			className={cssClass}>
-			{arrow}
-		</div>
+        let cssClass;
 
-    )
+        (this.props.direction == this.props.directionState) ? cssClass = 'direction-active': cssClass = 'direction';
+
+
+        let directionArrow;
+
+        switch (this.props.direction) {
+            case 'up':
+                directionArrow = '8593';
+                break;
+            case 'down':
+                directionArrow = '8595';
+                break;
+            case 'left':
+                directionArrow = '8592';
+                break;
+            case 'right':
+                directionArrow = '8594';
+                break;
+            default:
+                directionArrow = '';
+                break;
+        }
+
+        const arrow = String.fromCharCode(directionArrow);
+
+        return (
+
+            <div 
+				onClick={() => this.props.changeDirection(this.props.direction)} 
+				className={cssClass}>
+				{arrow}
+			</div>
+
+        )
+    }
 
 }

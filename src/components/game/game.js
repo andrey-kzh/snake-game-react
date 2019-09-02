@@ -5,6 +5,14 @@ import Board from '../board/board.js';
 import Button from '../button/button.js';
 import Direction from '../direction/direction.js';
 
+import {
+    returnNewFruitsArr,
+    returnNewDirectionByKey,
+    returnNextSnakeStep,
+    returnEatenFruitPosition
+} from '../../functions/functions.js';
+
+
 export default class Game extends React.Component {
 
     constructor(props) {
@@ -19,10 +27,13 @@ export default class Game extends React.Component {
 
     initialState() {
 
+        const snakeArr = [1, 2, 3];
+
         return {
-            snake: [1, 2, 3],
+            snake: snakeArr,
             direction: 'right',
             board: Array(400).fill(null),
+            fruits: returnNewFruitsArr(snakeArr, []),
         }
     }
 
@@ -45,26 +56,7 @@ export default class Game extends React.Component {
 
     changeDirections(newDirectionOrKey) {
 
-        if (newDirectionOrKey.code != undefined) {
-
-            switch (newDirectionOrKey.code) {
-                case 'ArrowLeft':
-                    newDirectionOrKey = 'left';
-                    break;
-                case 'ArrowUp':
-                    newDirectionOrKey = 'up';
-                    break;
-                case 'ArrowRight':
-                    newDirectionOrKey = 'right';
-                    break;
-                case 'ArrowDown':
-                    newDirectionOrKey = 'down';
-                    break;
-                default:
-                    newDirectionOrKey = false;
-                    break;
-            }
-        }
+        newDirectionOrKey = returnNewDirectionByKey(newDirectionOrKey)
 
         if (newDirectionOrKey !== false) {
             this.setState({ direction: newDirectionOrKey })
@@ -77,36 +69,33 @@ export default class Game extends React.Component {
         this.movieSnake = setInterval(() => {
 
             const oldSnake = this.state.snake;
-            let nextStep;
+            const nextStep = returnNextSnakeStep(oldSnake, this.state.direction);
+            let fruits = this.state.fruits.slice();
+            let cutTail = 1;
 
-            switch (this.state.direction) {
-                case 'up':
-                    nextStep = oldSnake[oldSnake.length - 1] - 20;
-                    break;
-                case 'down':
-                    nextStep = oldSnake[oldSnake.length - 1] + 20;
-                    break;
-                case 'left':
-                    nextStep = oldSnake[oldSnake.length - 1] - 1;
-                    break;
-                case 'right':
-                    nextStep = oldSnake[oldSnake.length - 1] + 1;
-                    break;
+            const eatenFruit = returnEatenFruitPosition(oldSnake, fruits);
+
+            if (eatenFruit !== false) {
+
+                fruits.splice(eatenFruit, 1);
+                cutTail = 0;
             }
 
-            let newSnake = oldSnake.slice(1);
+            let newSnake = oldSnake.slice(cutTail);
             newSnake = [...newSnake, nextStep];
 
-            this.setState({ snake: newSnake })
+            this.setState({
+                snake: newSnake,
+                fruits: returnNewFruitsArr(newSnake, fruits)
+            })
 
-        }, 300)
+        }, 200)
 
     }
 
 
     componentDidMount() {
 
-        //this.animateSnake();
         document.addEventListener('keydown', (event) => this.changeDirections(event))
     }
 
@@ -120,6 +109,7 @@ export default class Game extends React.Component {
             <Board 
                 snake={this.state.snake} 
                 board={this.state.board}
+                fruits={this.state.fruits}
             />
 
             <div className = "controls" >
