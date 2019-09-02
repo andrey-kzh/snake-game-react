@@ -7,9 +7,11 @@ import Direction from '../direction/direction.js';
 
 import {
     returnNewFruitsArr,
-    returnNewDirectionByKey,
+    returnDirectionByKey,
+    ignoreReversDirection,
     returnNextSnakeStep,
-    returnEatenFruitPosition
+    returnEatenFruitPosition,
+    isGameOver
 } from '../../functions/functions.js';
 
 
@@ -20,9 +22,10 @@ export default class Game extends React.Component {
 
         this.state = this.initialState();
 
-        this.changeDirections = this.changeDirections.bind(this);
+        this.changeDirection = this.changeDirection.bind(this);
         this.gameControls = this.gameControls.bind(this);
     }
+
 
 
     initialState() {
@@ -34,70 +37,107 @@ export default class Game extends React.Component {
             direction: 'right',
             board: Array(400).fill(null),
             fruits: returnNewFruitsArr(snakeArr, []),
+            status: 'Pause'
         }
     }
+
 
 
     gameControls(command) {
 
+        let status = this.state.status;
+
         switch (command) {
+
             case 'start':
                 this.animateSnake();
+                if (status != 'Game over') status = 'Play';
                 break;
+
             case 'pause':
                 clearInterval(this.movieSnake);
+                if (status != 'Game over') status = 'Pause';
                 break;
+
             case 'reset':
+                clearInterval(this.movieSnake);
                 this.setState(this.initialState());
+                status = 'Pause';
                 break;
+
+            case 'gameover':
+                clearInterval(this.movieSnake);
+                status = 'Game over';
         }
+
+        this.setState({ status: status })
     }
 
 
-    changeDirections(newDirectionOrKey) {
 
-        newDirectionOrKey = returnNewDirectionByKey(newDirectionOrKey)
+    changeDirection(directionOrKey) {
 
-        if (newDirectionOrKey !== false) {
-            this.setState({ direction: newDirectionOrKey })
+        let newDirection = directionOrKey;
+
+        if (directionOrKey.code != undefined) {
+            newDirection = returnDirectionByKey(directionOrKey)
+        }
+
+        const revers = ignoreReversDirection(newDirection, this.state.direction)
+
+        if ((newDirection !== false) && (revers !== false)) {
+
+            this.setState({ direction: newDirection })
         }
     }
+
 
 
     animateSnake() {
 
-        this.movieSnake = setInterval(() => {
+        if (this.state.status == 'Pause') {
 
-            const oldSnake = this.state.snake;
-            const nextStep = returnNextSnakeStep(oldSnake, this.state.direction);
-            let fruits = this.state.fruits.slice();
-            let cutTail = 1;
+            this.movieSnake = setInterval(() => {
 
-            const eatenFruit = returnEatenFruitPosition(oldSnake, fruits);
+                const oldSnake = this.state.snake;
+                const nextStep = returnNextSnakeStep(oldSnake, this.state.direction);
+                let fruits = this.state.fruits.slice();
+                let cutTail = 1;
 
-            if (eatenFruit !== false) {
+                const eatenFruit = returnEatenFruitPosition(oldSnake, fruits);
 
-                fruits.splice(eatenFruit, 1);
-                cutTail = 0;
-            }
+                if (eatenFruit !== false) {
 
-            let newSnake = oldSnake.slice(cutTail);
-            newSnake = [...newSnake, nextStep];
+                    fruits.splice(eatenFruit, 1);
+                    cutTail = 0;
+                }
 
-            this.setState({
-                snake: newSnake,
-                fruits: returnNewFruitsArr(newSnake, fruits)
-            })
+                let newSnake = oldSnake.slice(cutTail);
+                newSnake = [...newSnake, nextStep];
 
-        }, 200)
+                if (isGameOver(newSnake)) {
 
+                    this.gameControls('gameover')
+
+                } else {
+
+                    this.setState({
+                        snake: newSnake,
+                        fruits: returnNewFruitsArr(newSnake, fruits)
+                    })
+                }
+
+            }, 200)
+        }
     }
+
 
 
     componentDidMount() {
 
-        document.addEventListener('keydown', (event) => this.changeDirections(event))
+        document.addEventListener('keydown', (event) => this.changeDirection(event))
     }
+
 
 
     render() {
@@ -138,7 +178,7 @@ export default class Game extends React.Component {
                 <Direction 
                     direction="up"
                     directionState={this.state.direction}
-                    changeDirection={this.changeDirections}
+                    changeDirection={this.changeDirection}
                 />
                     
             </div> 
@@ -148,19 +188,19 @@ export default class Game extends React.Component {
                 <Direction 
                     direction="left"
                     directionState={this.state.direction}
-                    changeDirection={this.changeDirections} 
+                    changeDirection={this.changeDirection} 
                 />
 
                 <Direction 
                     direction = "down"
                     directionState={this.state.direction}
-                    changeDirection = { this.changeDirections }
+                    changeDirection = { this.changeDirection }
                 />
 
                 <Direction 
                     direction = "right"
                     directionState={this.state.direction}
-                    changeDirection = { this.changeDirections }
+                    changeDirection = { this.changeDirection }
                 /> 
             
             </div> 
