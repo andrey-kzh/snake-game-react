@@ -1,16 +1,34 @@
 .game {
     display: flex;
     justify-content: flex-start;
+    background-color: #ffffff;
+    width: 895px;
+    height: 545px;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px #000000 solid;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -282px 0 0 -447px;
 }
 
 .controls {
     padding: 0 0 0 20px;
+    position: relative;
+    width: 325px;
 }
 
-.buttons-block {}
+.buttons-block {
+    display: flex;
+    justify-content: space-between;
+}
 
 .direction-block {
     padding: 20px 0 0 0;
+    bottom: 0px;
+	position: absolute;
+	width: 100%;
 }
 
 .direction-wrap-line {

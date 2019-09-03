@@ -1,0 +1,32 @@
+.status, .gameover {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	box-sizing: border-box;
+	border: 2px #999999 solid;
+	color: #000000;
+	padding: 10px;
+}
+
+.status_position, .gameover {
+	margin: 20px 0 0 0;
+}
+
+.gameover {
+    animation-name: gameover;
+    animation-duration: 1s;
+}
+
+@keyframes gameover {
+    0%, 50%, 100%  {
+        background-color: #000000;
+        border-color: #000000;
+        color: #ffffff;
+    }
+    
+    25%, 75% {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}

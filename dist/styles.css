@@ -1,0 +1,156 @@
+html, body {
+	font-family: Arial;
+	paddig: 0px;
+	margin: 0px;
+	background-color: #999999;
+}
+.game {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #ffffff;
+    width: 895px;
+    height: 545px;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px #000000 solid;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -282px 0 0 -447px;
+}
+
+.controls {
+    padding: 0 0 0 20px;
+    position: relative;
+    width: 325px;
+}
+
+.buttons-block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.direction-block {
+    padding: 20px 0 0 0;
+    bottom: 0px;
+	position: absolute;
+	width: 100%;
+}
+
+.direction-wrap-line {
+    display: flex;
+    justify-content: center;
+}
+.board {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    border: 1px #000000 solid;
+}
+.square {
+    border: 1px #999999 solid;
+    box-sizing: border-box;
+    ;
+    width: 5%;
+    height: 5%;
+    position: relative;
+}
+
+.snake {
+    background-color: #000000;
+}
+
+.fruit:before {
+    content: '';
+    display: block;
+    border: 0px;
+    border-radius: 50%;
+    left: 5%;
+    right: 5%;
+    top: 5%;
+    bottom: 5%;
+    position: absolute;
+    background-color: #999999;
+}
+.control-button {
+    width: 100px;
+    height: 30px;
+    font-size: 16px;
+    text-align: center;
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    background-color: #ffffff;
+}
+.direction, .direction-active {
+    width: 60px;
+    height: 60px;
+    border: 1px #000000 solid;
+    font-size: 28px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 52px;
+}
+
+.direction:hover {
+    border-color: #999999;
+    color: #999999;
+}
+
+.direction-active {
+    border: 1px #ffffff solid;
+    color: #ffffff;
+    background-color: #000000;
+    cursor: default;
+}
+
+.direction_position, .direction-active_position {
+    margin: 0 6px 6px 0;
+}
+.status, .gameover {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	box-sizing: border-box;
+	border: 2px #999999 solid;
+	color: #000000;
+	padding: 10px;
+}
+
+.status_position, .gameover {
+	margin: 20px 0 0 0;
+}
+
+.gameover {
+    animation-name: gameover;
+    animation-duration: 1s;
+}
+
+@keyframes gameover {
+    0%, 50%, 100%  {
+        background-color: #000000;
+        border-color: #000000;
+        color: #ffffff;
+    }
+    
+    25%, 75% {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+.score {
+	font-size: 150px;
+	text-align: center;
+	color: #999999;
+	font-weight: bold;
+}
+
+.score_position {
+	margin: 40px 0 0 0;
+}
+

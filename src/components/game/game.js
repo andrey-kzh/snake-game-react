@@ -4,6 +4,8 @@ import css from './style.css';
 import Board from '../board/board.js';
 import Button from '../button/button.js';
 import Direction from '../direction/direction.js';
+import Status from '../status/status.js';
+import Score from '../score/score.js';
 
 import {
     returnNewFruitsArr,
@@ -30,14 +32,15 @@ export default class Game extends React.Component {
 
     initialState() {
 
-        const snakeArr = [1, 2, 3];
+        const snakeArr = [21, 22, 23];
 
         return {
             snake: snakeArr,
             direction: 'right',
             board: Array(400).fill(null),
             fruits: returnNewFruitsArr(snakeArr, []),
-            status: 'Pause'
+            status: 'Pause',
+            score: 0
         }
     }
 
@@ -103,6 +106,7 @@ export default class Game extends React.Component {
                 const nextStep = returnNextSnakeStep(oldSnake, this.state.direction);
                 let fruits = this.state.fruits.slice();
                 let cutTail = 1;
+                let score = this.state.score;
 
                 const eatenFruit = returnEatenFruitPosition(oldSnake, fruits);
 
@@ -110,6 +114,7 @@ export default class Game extends React.Component {
 
                     fruits.splice(eatenFruit, 1);
                     cutTail = 0;
+                    score++;
                 }
 
                 let newSnake = oldSnake.slice(cutTail);
@@ -123,7 +128,8 @@ export default class Game extends React.Component {
 
                     this.setState({
                         snake: newSnake,
-                        fruits: returnNewFruitsArr(newSnake, fruits)
+                        fruits: returnNewFruitsArr(newSnake, fruits),
+                        score: score
                     })
                 }
 
@@ -170,6 +176,10 @@ export default class Game extends React.Component {
                         command="reset" 
                         gameControls={this.gameControls} />
             </div>
+
+            <Status status={this.state.status} />
+            <Score score={this.state.score} />
+
 
             <div className = "direction-block" >
 

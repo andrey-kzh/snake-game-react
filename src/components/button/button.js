@@ -11,8 +11,10 @@ export default class Button extends React.PureComponent {
 
         return (
 
-            <button onClick={() => this.props.gameControls(this.props.command)}>
-				{this.props.buttonName}
+            <button 
+                className='control-button' 
+                onClick={() => this.props.gameControls(this.props.command)}>
+                    {this.props.buttonName}
 			</button>
         )
     }

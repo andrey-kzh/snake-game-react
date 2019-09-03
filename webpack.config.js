@@ -5,22 +5,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     mode: "development",
-    entry: './src/index.js', //входящий файл
+    entry: './src/index.js',
     output: {
-        filename: 'bundle.js', //выходящий файл
-        path: path.resolve(__dirname, 'dist') //папка в которую собираем проект
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
     },
 
-    devServer: { //сервер
+    devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: 9000
     },
     module: {
         rules: [{
-                test: /\.css$/i, //ccs-loader позволяет инмпортировать css файл в js файл (import css from 'style.css')
+                test: /\.css$/i,
                 use: [
-                    MiniCssExtractPlugin.loader, //собирает импортированные css в единый файл
+                    MiniCssExtractPlugin.loader,
                     { loader: 'css-loader', options: { importLoaders: 1 } }
                 ],
             },
@@ -31,21 +31,20 @@ module.exports = {
                     loader: "babel-loader",
                     options: {
                         presets: ["@babel/preset-env", "@babel/preset-react"],
-                        //plugins: ["@babel/plugin-syntax-dynamic-import"] //плагин динамического импорта
                     }
                 }
             }
         ],
     },
-    plugins: [ //создает html страницу при сборке и импортирует в нее бандл (и css?)
+    plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: 'index.html'
         }),
-        new MiniCssExtractPlugin({ //собирает импортированные css в единый файл
+        new MiniCssExtractPlugin({
             filename: "styles.css"
         }),
-        new CleanWebpackPlugin(), //очищает папку с билдом
+        new CleanWebpackPlugin(),
     ]
 
 };

@@ -21,7 +21,7 @@ export function returnNewFruitsArr(snakeArr, fruitsArr) {
 
 
 
-//Return eaten fruit position in array of false
+//Return eaten fruit position in array or false
 export function returnEatenFruitPosition(snakeArr, fruitsArr) {
 
     let fruitPosition = false;

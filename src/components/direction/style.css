@@ -1,8 +1,7 @@
-.direction {
+.direction, .direction-active {
     width: 60px;
     height: 60px;
     border: 1px #000000 solid;
-    margin: 0 6px 6px 0;
     font-size: 28px;
     text-align: center;
     cursor: pointer;
@@ -15,13 +14,12 @@
 }
 
 .direction-active {
-    width: 60px;
-    height: 60px;
     border: 1px #ffffff solid;
-    margin: 0 6px 6px 0;
-    font-size: 28px;
-    text-align: center;
-    line-height: 52px;
     color: #ffffff;
-    background-color: #000000
+    background-color: #000000;
+    cursor: default;
+}
+
+.direction_position, .direction-active_position {
+    margin: 0 6px 6px 0;
 }

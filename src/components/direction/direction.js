@@ -10,9 +10,11 @@ export default class Direction extends React.PureComponent {
 
     render() {
 
-        let cssClass;
+        let cssClass = 'direction direction_position'
 
-        (this.props.direction == this.props.directionState) ? cssClass = 'direction-active': cssClass = 'direction';
+        if (this.props.direction == this.props.directionState) { 
+            cssClass = 'direction-active direction-active_position' 
+        }
 
 
         let directionArrow;
